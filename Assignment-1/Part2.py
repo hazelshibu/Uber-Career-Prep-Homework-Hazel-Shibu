@@ -5,7 +5,6 @@ def isStringPermutation(s1:str, s2:str) -> bool:
             map[letter] = map[letter] + 1
         else:
             map[letter] = 1
-    # second string
     for letter in s2:
         if letter in map.keys():
             map[letter] = map[letter] - 1
