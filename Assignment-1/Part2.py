@@ -1,7 +1,5 @@
 def isStringPermutation(s1:str, s2:str) -> bool:
-    # dictionary: keys-> letters, values->num of occurrences
     map = {}
-    # first string
     for letter in s1:
         if letter in map.keys():
             map[letter] = map[letter] + 1
