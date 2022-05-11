@@ -1,3 +1,4 @@
+import unittest
 class Stack:
     def __init__(self):
         self.els = [] # stores the values in the list
@@ -15,7 +16,7 @@ class Stack:
         if len(self.els) != 0:
             return self.els[len(self.els)-1]
         else:
-            return "No elements remaning on stack"
+            return "No elements remaining on stack"
     
     def isEmpty(self):
         if len(self.els) == 0:
@@ -24,6 +25,12 @@ class Stack:
         
     def size(self):
         return len(self.els)
+    
+    def printStack(self):
+        string = ""
+        for i in range(0,len(self.els)):
+            string += str(self.els[i]) + " "
+        return string
         
 class Queue:
     def __init__(self):
@@ -58,48 +65,52 @@ class Queue:
             return True
         return False
 
+    def printQueue(self):
+        string = ""
+        for i in range(0,len(self.els)):
+            string += str(self.els[i]) + " "
+        return string
+
 # testing
-stack1 = Stack()
-stack1.push(5)
-stack1.push(6)
-stack1.push(7)
-stack1.push(8)
-stack1.pop()
-stack1.push(8)
+class Tests(unittest.TestCase):
+    def testStack(self):
+        stack1.push(5)
+        stack1.push(6)
+        stack1.push(7)
+        stack1.push(8)
+        stack1.pop()
+        stack1.push(8)
+        self.assertEqual(stack1.top(),8)
+        self.assertEqual(stack1.size(),4)
+        self.assertEqual(stack1.isEmpty(),False)
+        self.assertEqual(stack1.printStack(),"5 6 7 8 ")
+        for i in range(0,len(stack1.els)):
+            stack1.pop()
+        stack1.pop() # pop test on empty stack
+        self.assertEqual(stack1.top(),"No elements remaining on stack") # top test on empty stack
+        self.assertEqual(stack1.size(),0)
+        self.assertEqual(stack1.isEmpty(),True)
 
-print("Stack testing:")
-print("top: ",stack1.top()) # top test
-print("size: ",stack1.size()) # pop test
 
-for i in range(0,len(stack1.els)):
-    print("element: ",stack1.els[i])
+    def testQueue(self):
+        queue1.enqueue("happy")
+        queue1.enqueue(10)
+        queue1.enqueue(11)
+        self.assertEqual(queue1.front(),11)
+        self.assertEqual(queue1.rear(),"happy")
+        self.assertEqual(queue1.size(),3)
+        self.assertEqual(queue1.isEmpty(),False)
+        self.assertEqual(queue1.printQueue(),"11 10 happy ")
+        queue1.dequeue()
+        self.assertEqual(queue1.printQueue(),"11 10 ")
+        queue1.dequeue()
+        queue1.dequeue()
+        queue1.dequeue()
+        self.assertEqual(queue1.rear(),"No elements remaining on queue")
+        self.assertEqual(queue1.size(),0)
+        self.assertEqual(queue1.isEmpty(),True)
 
-print("Empty? ",stack1.isEmpty())
-for i in range(0,len(stack1.els)):
-    stack1.pop()
-stack1.pop() # pop test on empty stack
-print("top: ",stack1.top()) # top test on empty stack
-print("Empty? ", stack1.isEmpty())
-print("size: ", stack1.size())
-
-print()
-print("Queue testing:")
-queue1 = Queue()
-queue1.enqueue("happy")
-queue1.enqueue(10)
-queue1.enqueue(11)
-print("front: ",queue1.front())
-print("rear: ",queue1.rear())
-print("size: ",queue1.size())
-print("Empty? ",queue1.isEmpty())
-for i in range(0,len(queue1.els)):
-    print("element: ",queue1.els[i])
-queue1.dequeue()
-for i in range(0,len(queue1.els)):
-    print("element: ",queue1.els[i])
-queue1.dequeue()
-queue1.dequeue()
-queue1.dequeue()
-print(queue1.rear())
-print("size: ",queue1.size())
-print("Empty? ",queue1.isEmpty())
+if __name__ == '__main__':
+    stack1 = Stack()
+    queue1 = Queue()
+    unittest.main()
